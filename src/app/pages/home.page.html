@@ -7,7 +7,7 @@
 <ion-content class="ion-padding">
 
   <!-- FORMULÁRIO -->
-  <ion-card>
+  <ion-card color="tertiary">
     <ion-card-header>
       <ion-card-title>
         {{ editingId() ? 'Editar usuário' : 'Novo usuário' }}
@@ -35,12 +35,12 @@
           Informe um e-mail válido.
         </ion-note>
 
-        <div class="actions">
-          <ion-button type="submit" expand="block" color="success">
+        <div  class="actions" color="secondary">
+          <ion-button type="submit" expand="block">
             {{ editingId() ? 'Salvar alterações' : 'Cadastrar' }}
           </ion-button>
 
-          <ion-button *ngIf="editingId()" type="button" expand="block" color="medium" (click)="cancelEdit()">
+          <ion-button *ngIf="editingId()" type="button" expand="block" (click)="cancelEdit()">
             Cancelar
           </ion-button>
         </div>
