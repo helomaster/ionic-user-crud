@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Cadastro de Usuários</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- FORMULÁRIO -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{ editingId() ? 'Editar usuário' : 'Novo usuário' }}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <ion-item>
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input formControlName="name" placeholder="Ex.: Maria Silva"></ion-input>
+        </ion-item>
+
+        <ion-note color="danger" *ngIf="f['name'].touched && f['name'].invalid">
+          Informe um nome com pelo menos 3 letras.
+        </ion-note>
+
+        <ion-item class="ion-margin-top">
+          <ion-label position="floating">E-mail</ion-label>
+          <ion-input type="email" formControlName="email" placeholder="exemplo@email.com"></ion-input>
+        </ion-item>
+
+        <ion-note color="danger" *ngIf="f['email'].touched && f['email'].invalid">
+          Informe um e-mail válido.
+        </ion-note>
+
+        <div class="actions">
+          <ion-button type="submit" expand="block" color="success">
+            {{ editingId() ? 'Salvar alterações' : 'Cadastrar' }}
+          </ion-button>
+
+          <ion-button *ngIf="editingId()" type="button" expand="block" color="medium" (click)="cancelEdit()">
+            Cancelar
+          </ion-button>
+        </div>
+
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- LISTA DE USUÁRIOS -->
+  <ion-list *ngIf="(users$ | async) as users">
+    <ion-list-header>
+      <ion-label>Usuários cadastrados ({{ users.length }})</ion-label>
+      <ion-note *ngIf="!users.length">Nenhum usuário ainda.</ion-note>
+    </ion-list-header>
+
+    <ion-item *ngFor="let u of users; trackBy: trackById">
+      <ion-label>
+        <h2>{{ u.name }}</h2>
+        <p>{{ u.email }}</p>
+      </ion-label>
+
+      <ion-buttons slot="end">
+        <ion-button fill="outline" color="primary" (click)="edit(u)">Editar</ion-button>
+        <ion-button fill="outline" color="danger" (click)="remove(u.id)">Excluir</ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
